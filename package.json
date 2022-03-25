@@ -1,0 +1,16 @@
+{
+  "name": "steam-sysreq",
+  "version": "1.0.0",
+  "description": "Gets system requirement information to compare to the ones shown in Steam.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mohammed Keyvanzadeh <mohammadkeyvanzade94@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "systeminformation": "^5.11.9"
+  }
+}
