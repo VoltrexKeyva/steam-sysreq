@@ -8,7 +8,6 @@ const formattedOsNames = {
     openbsd: 'OpenBSD',
     netbsd: 'NetBSD',
     sunos: 'SunOS',
-    win32: 'Windows',
     android: 'Android'
   },
   sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
