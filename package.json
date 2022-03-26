@@ -4,6 +4,7 @@
   "description": "Gets system requirement information to compare to the ones shown in Steam.",
   "main": "index.js",
   "type": "module",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
