@@ -12,6 +12,4 @@ interface SystemRequirements {
   availableDiskSpace: string;
 }
 
-declare module 'steam-sysreq' {
-  export default function getSteamSysReq(): Promise<SystemRequirements>;
-}
+export default function getSteamSysReq(): Promise<SystemRequirements>;
