@@ -1,3 +1,5 @@
+'use strict';
+
 import { osInfo, cpu, mem, graphics, fsSize } from 'systeminformation';
 
 const formattedOsNames = {
@@ -11,7 +13,7 @@ const formattedOsNames = {
     android: 'Android'
   },
   sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-  base = 1024;
+  logBase = Math.log(1024);
 
 /**
  * Formats bytes into a more readable string.
@@ -19,12 +21,9 @@ const formattedOsNames = {
  * @returns {string} The formatted bytes.
  */
 function formatBytes(bytes) {
-  if (typeof bytes !== 'number' || isNaN(bytes))
-    throw new TypeError("Argument 'bytes' must be a number.");
+  const exponent = Math.floor(Math.log(bytes) / logBase);
 
-  const exponent = Math.floor(Math.log(bytes) / Math.log(base));
-
-  return `${(bytes / Math.pow(base, exponent)).toFixed()} ${sizes[exponent]}`;
+  return `${(bytes / Math.pow(1024, exponent)).toFixed()} ${sizes[exponent]}`;
 }
 
 /**
