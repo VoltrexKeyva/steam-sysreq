@@ -49,9 +49,9 @@ async function getSteamSysReq() {
     fsSize_ = await fsSize();
 
   return {
-    os: `${formattedOsNames[osInfo_.platform] ?? osInfo_.platform} ${osInfo_.kernel} (${
-      osInfo_.distro
-    } ${osInfo_.release})`,
+    os: `${formattedOsNames[osInfo_.platform] ?? osInfo_.platform} ${
+      osInfo_.kernel
+    } (${osInfo_.distro} ${osInfo_.release})`,
     processor: `${cpu_.manufacturer} ${cpu_.brand} @ ${cpu_.speedMax.toFixed(
       2
     )}GHz`,
