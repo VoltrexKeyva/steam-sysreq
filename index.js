@@ -32,7 +32,7 @@ function formatBytes(bytes) {
  * @prop {string} processor The Central Processing Unit (CPU)
  * model.
  * @prop {string} ram The Random Access Memory (RAM) size.
- * @prop {string} graphics The Graphics Processing Unit (GPU)
+ * @prop {string[]} graphics The Graphics Processing Unit (GPU)
  * models.
  * @prop {string} availableDiskSpace The available disk space.
  */
