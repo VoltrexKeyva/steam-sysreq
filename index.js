@@ -41,7 +41,7 @@ function formatBytes(bytes) {
  * Gets the Steam system requirements information.
  * @returns {Promise<SystemRequirements>} The system requirements.
  */
-async function getSteamSysReq() {
+export default async function getSteamSysReq() {
   const osInfo_ = await osInfo(),
     cpu_ = await cpu(),
     mem_ = await mem(),
@@ -67,5 +67,3 @@ async function getSteamSysReq() {
     availableDiskSpace: formatBytes(fsSize_[0].available)
   };
 }
-
-export default getSteamSysReq;
