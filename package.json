@@ -15,7 +15,7 @@
   "author": "Mohammed Keyvanzadeh <mohammadkeyvanzade94@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "systeminformation": "^5.11.20"
+    "systeminformation": "^5.11.21"
   },
   "bugs": {
     "url": "https://github.com/VoltrexMaster/steam-sysreq/issues"
