@@ -1,6 +1,6 @@
 {
   "name": "steam-sysreq",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Gets system requirement information to compare to the ones shown in Steam.",
   "main": "index.js",
   "type": "module",
