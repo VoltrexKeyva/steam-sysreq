@@ -1,8 +1,6 @@
-'use strict';
-
 import { osInfo, cpu, mem, graphics, fsSize } from 'systeminformation';
 
-const formattedOsNames = {
+const formattedOsNames: Record<string, string> = {
     aix: 'Aix',
     darwin: 'Darwin',
     freebsd: 'FreeBSD',
@@ -16,32 +14,26 @@ const formattedOsNames = {
   logBase = Math.log(1024);
 
 /**
- * Formats bytes into a more readable string.
- * @param {number} bytes The bytes to format.
- * @returns {string} The formatted bytes.
+ * Formats bytes into a more human-readable form.
  */
-function formatBytes(bytes) {
+function formatBytes(bytes: number): string {
   const exponent = Math.floor(Math.log(bytes) / logBase);
 
   return `${(bytes / Math.pow(1024, exponent)).toFixed()} ${sizes[exponent]}`;
 }
 
-/**
- * @typedef {object} SystemRequirements
- * @prop {string} os The operating system.
- * @prop {string} processor The Central Processing Unit (CPU)
- * model.
- * @prop {string} ram The Random Access Memory (RAM) size.
- * @prop {string[]} graphics The Graphics Processing Unit (GPU)
- * models.
- * @prop {string} availableDiskSpace The available disk space.
- */
+interface SystemRequirements {
+  os: string;
+  processor: string;
+  ram: string;
+  graphics: string[];
+  availableDiskSpace: string;
+}
 
 /**
  * Gets the Steam system requirements information.
- * @returns {Promise<SystemRequirements>} The system requirements.
  */
-export default async function getSteamSysReq() {
+export default async function getSteamSysReq(): Promise<SystemRequirements> {
   const osInfo_ = await osInfo(),
     cpu_ = await cpu(),
     mem_ = await mem(),

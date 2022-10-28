@@ -6,7 +6,9 @@
   "type": "module",
   "types": "index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier -w .",
+    "lint": "eslint .",
+    "build": "tsc"
   },
   "keywords": [
     "steam",
@@ -15,7 +17,14 @@
   "author": "Mohammed Keyvanzadeh <mohammadkeyvanzade94@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "systeminformation": "^5.12.10"
+    "systeminformation": "^5.12.11"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "eslint": "^8.26.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
   },
   "bugs": {
     "url": "https://github.com/VoltrexMaster/steam-sysreq/issues"

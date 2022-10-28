@@ -16,13 +16,13 @@ Example output:
 
 ```js
 {
-  os: 'Linux 5.13.0-37-generic (Ubuntu 21.10)',
+  os: 'Linux 5.19.0-23-generic (Ubuntu 22.10)',
   processor: 'Intel Pentium® 6405U @ 2.40GHz',
   ram: '8 GB',
   graphics: [
-    'Intel Corporation Device 9b21',
+    'Intel Corporation Comet Lake-U GT2 [UHD Graphics 620]',
     'NVIDIA Corporation GM108M [GeForce MX130]'
   ],
-  availableDiskSpace: '826 GB'
+  availableDiskSpace: '644 GB'
 }
 ```
