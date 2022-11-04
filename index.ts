@@ -1,54 +1,52 @@
-import { osInfo, cpu, mem, graphics, fsSize } from 'systeminformation';
+import * as systemInformation from 'systeminformation';
+import { strToUpper } from './utils/utils';
+import {
+  SystemInformation,
+  SystemInformationType,
+  SystemInformationTypes
+} from './utils/structures';
 
-const formattedOsNames: Record<string, string> = {
-    aix: 'Aix',
-    darwin: 'Darwin',
-    freebsd: 'FreeBSD',
-    linux: 'Linux',
-    openbsd: 'OpenBSD',
-    netbsd: 'NetBSD',
-    sunos: 'SunOS',
-    android: 'Android'
-  },
-  sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-  logBase = Math.log(1024);
-
-/**
- * Formats bytes into a more human-readable form.
- */
-function formatBytes(bytes: number): string {
-  const exponent = Math.floor(Math.log(bytes) / logBase);
-
-  return `${(bytes / Math.pow(1024, exponent)).toFixed()} ${sizes[exponent]}`;
+export interface SystemRequirements {
+  os: SystemInformation;
+  processor: SystemInformation;
+  ram: SystemInformation;
+  graphics: SystemInformation;
+  availableDiskSpace: SystemInformation;
 }
 
-interface SystemRequirements {
-  os: string;
-  processor: string;
-  ram: string;
-  graphics: string[];
-  availableDiskSpace: string;
-}
-
-/**
- * Gets the Steam system requirements information.
- */
-export default async function getSteamSysReq(): Promise<SystemRequirements> {
-  const osInfo_ = await osInfo(),
-    cpu_ = await cpu(),
-    mem_ = await mem(),
-    graphics_ = await graphics(),
-    fsSize_ = await fsSize();
-
-  return {
-    os: `${formattedOsNames[osInfo_.platform] ?? osInfo_.platform} ${
-      osInfo_.kernel
-    } (${osInfo_.distro} ${osInfo_.release})`,
-    processor: `${cpu_.manufacturer} ${cpu_.brand} @ ${cpu_.speedMax.toFixed(
+export async function getSteamSysReq(): Promise<SystemRequirements> {
+  const [
+    osInfo,
+    cpu,
+    mem,
+    graphics,
+    fsSize
+  ] = await Promise.all([
+      systemInformation.osInfo(),
+      systemInformation.cpu(),
+      systemInformation.mem(),
+      systemInformation.graphics(),
+      systemInformation.fsSize()
+    ]),
+    formattedOsNames = {
+      aix: 'Aix',
+      darwin: 'Darwin',
+      freebsd: 'FreeBSD',
+      linux: 'Linux',
+      openbsd: 'OpenBSD',
+      netbsd: 'NetBSD',
+      sunos: 'SunOS',
+      android: 'Android'
+    },
+    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    logBase = Math.log(1024),
+    formattedOsName = formattedOsNames[osInfo.platform] ?? osInfo.platform,
+    formattedKernel = `${formattedOsName} ${osInfo.kernel} (${osInfo.distro} ${osInfo.release})`,
+    formattedProcessor = `${cpu.manufacturer} ${cpu.brand} @ ${cpu.speedMax.toFixed(
       2
     )}GHz`,
-    ram: formatBytes(mem_.total),
-    graphics: graphics_.controllers.map(
+    formattedRam = formatBytes(mem.total),
+    formattedGraphics = graphics.controllers.map(
       (controller) =>
         `${controller.vendor} ${
           controller.model.at(-1) === ' '
@@ -56,6 +54,45 @@ export default async function getSteamSysReq(): Promise<SystemRequirements> {
             : controller.model
         }`
     ),
-    availableDiskSpace: formatBytes(fsSize_[0].available)
+    formattedAvailableDiskSpace = formatBytes(fsSize[0].available);
+
+  return {
+    os: new SystemInformation({
+      name: 'Operating System',
+      value: formattedKernel,
+      type: SystemInformationTypes.OS
+    }),
+    processor: new SystemInformation({
+      name: 'Processor',
+      value: formattedProcessor,
+      type: SystemInformationTypes.Processor
+    }),
+    ram: new SystemInformation({
+      name: 'RAM',
+      value: formattedRam,
+      type: SystemInformationTypes.RAM
+    }),
+    graphics: new SystemInformation({
+      name: 'Graphics',
+      value: formattedGraphics.join(', '),
+      type: SystemInformationTypes.Graphics
+    }),
+    availableDiskSpace: new SystemInformation({
+      name: 'Available Disk Space',
+      value: formattedAvailableDiskSpace,
+      type: SystemInformationTypes.AvailableDiskSpace
+    })
   };
+}
+
+/**
+ * Formats bytes into a more human-readable form.
+ *
+ * @param bytes Number of bytes to format
+ * @returns Formatted bytes
+ */
+export function formatBytes(bytes: number): string {
+  const exponent = Math.floor(Math.log(bytes) / logBase);
+
+  return `${(bytes / Math.pow(1024, exponent)).toFixed()} ${sizes[exponent]}`;
 }
