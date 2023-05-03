@@ -27,7 +27,7 @@ interface SystemRequirements {
   processor: string;
   ram: string;
   graphics: string[];
-  availableDiskSpace: string;
+  availableDiskSpace: string | null;
 }
 
 /**
@@ -44,18 +44,14 @@ export default async function getSteamSysReq(): Promise<SystemRequirements> {
     os: `${formattedOsNames[osInfo_.platform] ?? osInfo_.platform} ${
       osInfo_.kernel
     } (${osInfo_.distro} ${osInfo_.release})`,
-    processor: `${cpu_.manufacturer} ${cpu_.brand} @ ${cpu_.speedMax.toFixed(
-      2
-    )}GHz`,
+    processor: `${cpu_.manufacturer}${
+      cpu_.brand.length !== 0 ? ` ${cpu_.brand}` : ''
+    } @ ${cpu_.speedMax.toFixed(2)}GHz`,
     ram: formatBytes(mem_.total),
     graphics: graphics_.controllers.map(
-      (controller) =>
-        `${controller.vendor} ${
-          controller.model.at(-1) === ' '
-            ? controller.model.slice(0, -1)
-            : controller.model
-        }`
+      (controller) => `${controller.vendor} ${controller.model.trim()}`
     ),
-    availableDiskSpace: formatBytes(fsSize_[0].available)
+    availableDiskSpace:
+      fsSize_.length !== 0 ? formatBytes(fsSize_[0].available) : null
   };
 }
