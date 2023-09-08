@@ -33,6 +33,6 @@
   "homepage": "https://github.com/VoltrexKeyva/steam-sysreq",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VoltrexKeyva/steam-sysreq"
+    "url": "git+https://github.com/VoltrexKeyva/steam-sysreq.git"
   }
 }
